@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Марк Соколов — Cinematic Digital Experience</title>
+<title>Саидаброр Толибов — Cinematic Digital Experience</title>
 <meta name="description" content="Интерактивная история жизни: путь, проекты, моменты и способы связаться. Cinematic digital experience на Three.js, GSAP и WebGL.">
 <meta name="theme-color" content="#050506">
 
@@ -123,7 +123,7 @@
 <section class="section about" id="about">
   <div class="about__grid">
     <div class="about__mask" id="aboutMask">
-      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=900&q=80" alt="Марк Соколов">
+      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=900&q=80" alt="Саидаброр Толибов">
     </div>
     <div>
       <span class="eyebrow">Обо мне</span>
@@ -188,13 +188,26 @@
     <h2 class="section__title">Вещи, которые<br>меня окружают</h2>
   </div>
   <div class="lifestyle__stage">
-    <div class="float-item" data-depth="1.4">⌨️</div>
-    <div class="float-item" data-depth="0.8">📷</div>
-    <div class="float-item" data-depth="1.1">🏎️</div>
-    <div class="float-item" data-depth="0.6">💿</div>
-    <div class="float-item" data-depth="1.3">📚</div>
-    <div class="float-item" data-depth="0.9">🎧</div>
+  <div class="float-item" data-depth="1.4">
+    <img src="assets/html.png" alt="HTML">
   </div>
+
+  <div class="float-item" data-depth="0.8">
+    <img src="assets/yandex.png" alt="Yandex">
+  </div>
+
+  <div class="float-item" data-depth="1.1">
+    <img src="assets/cs.jpg" alt="Counter-Strike">
+  </div>
+
+  <div class="float-item" data-depth="0.6">
+    <img src="assets/music.png" alt="Music">
+  </div>
+
+  <div class="float-item" data-depth="1.3">
+    <img src="assets/runpad.png" alt="Runpad">
+  </div>
+</div>
 </section>
 
 <!-- ============ TRAVEL ============ -->
@@ -205,7 +218,7 @@
   </div>
   <div class="travel__map"><canvas id="travelCanvas"></canvas></div>
   <div class="travel__stats">
-    <div><strong>24</strong><span>СТРАНЫ</span></div>
+    <div><strong>11</strong><span>Областей</span></div>
     <div><strong>63</strong><span>ГОРОДА</span></div>
     <div><strong>140K+</strong><span>КМ В ПУТИ</span></div>
   </div>
@@ -257,29 +270,24 @@
   </div>
   <div class="showcase__tabs" id="showcaseTabs">
     <button class="showcase__tab is-active" data-filter="all">Всё</button>
-    <button class="showcase__tab" data-filter="books">Книги</button>
+    <button class="showcase__tab" data-filter="html">HTML</button>
     <button class="showcase__tab" data-filter="music">Музыка</button>
     <button class="showcase__tab" data-filter="gaming">Игры</button>
     <button class="showcase__tab" data-filter="tech">Технологии</button>
   </div>
   <div class="showcase__grid" id="showcaseGrid">
-    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Дюна»</h4><p>Перечитываю раз в пару лет</p></div>
-    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Snow Crash»</h4><p>Предсказал половину интернета</p></div>
-    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Дизайн привычных вещей»</h4><p>Настольная книга по UX</p></div>
-    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Атомные привычки»</h4><p>Про маленькие шаги</p></div>
-    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Синти-вейв</h4><p>Работаю только под него</p></div>
-    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Tycho</h4><p>Идеально для фокуса</p></div>
-    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Boards of Canada</h4><p>Ностальгия в чистом виде</p></div>
-    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Виниловые пятницы</h4><p>Ритуал в конце недели</p></div>
-    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Disco Elysium</h4><p>Игра, которая говорит как книга</p></div>
-    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Hades</h4><p>Идеальный игровой луп</p></div>
-    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Portal 2</h4><p>Дизайн уровней как образец</p></div>
-    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Outer Wilds</h4><p>Самое честное чувство открытия</p></div>
-    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Three.js</h4><p>Инструмент, который изменил мой веб</p></div>
-    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>WebGL Shaders</h4><p>Учусь писать GLSL по вечерам</p></div>
-    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Figma</h4><p>Второй дом для дизайна</p></div>
-    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Механическая клавиатура</h4><p>Звук, под который я думаю</p></div>
-  </div>
+  <div class="showcase-card" data-cat="html"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/html.png" alt=""></span><h4>runpad.uz</h4></div><p>Сайт для игровых клубов</p></div>
+  <div class="showcase-card" data-cat="html"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/html.png" alt=""></span><h4>Runpad Pro</h4></div><p>Продаю дизайны для программы Runpad Pro</p></div>
+  <div class="showcase-card" data-cat="music"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/music.png" alt=""></span><h4>Синти-вейв</h4></div><p>Работаю только под него</p></div>
+  <div class="showcase-card" data-cat="music"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/music.png" alt=""></span><h4>Tycho</h4></div><p>Идеально для фокуса</p></div>
+  <div class="showcase-card" data-cat="music"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/music.png" alt=""></span><h4>Boards of Canada</h4></div><p>Ностальгия в чистом виде</p></div>
+  <div class="showcase-card" data-cat="music"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/music.png" alt=""></span><h4>Виниловые пятницы</h4></div><p>Ритуал в конце недели</p></div>
+  <div class="showcase-card" data-cat="gaming"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/cs.jpg" alt=""></span><h4>Counter-Strike 2</h4></div><p>Более 200 часов в Steam</p></div>
+  <div class="showcase-card" data-cat="gaming"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/cs.jpg" alt=""></span><h4>FACEIT</h4></div><p>Активно играю и повышаю ранг</p></div>
+  <div class="showcase-card" data-cat="tech"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/yandex.png" alt=""></span><h4>Яндекс Маркет</h4></div><p>Опыт работы оператором B2C-поддержки</p></div>
+  <div class="showcase-card" data-cat="tech"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/yandex.png" alt=""></span><h4>Яндекс</h4></div><p>Руководитель группы</p></div>
+  <div class="showcase-card" data-cat="tech"><div class="showcase-card__head"><span class="showcase-card__icon"><img src="assets/yandex.png" alt=""></span><h4>Опыт</h4></div><p>Развитие команды и контроль качества</p></div>
+</div>
 </section>
 
 <!-- ============ ACHIEVEMENTS ============ -->
@@ -379,11 +387,11 @@
 
 <footer class="footer">
   <div class="footer__top">
-    <a href="#top" class="footer__logo">Марк Соколов</a>
+    <a href="#top" class="footer__logo">Саидаброр Толибов</a>
     <button class="to-top" id="toTop" aria-label="Наверх"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
   </div>
   <div class="footer__bottom">
-    <p>© <span id="year"></span> Марк Соколов. Cinematic Digital Experience.</p>
+    <p>© <span id="year"></span> Саидаброр Толибов. Cinematic Digital Experience.</p>
     <p class="footer__made">Three.js · GSAP · Lenis · vanilla JS</p>
   </div>
 </footer>
