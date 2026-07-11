@@ -1,0 +1,47 @@
+/* ==========================================================================
+   ANIMATIONS — keyframes, reveal fallbacks, reduced-motion
+   ========================================================================== */
+
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *,*::before,*::after{
+    animation-duration:.01ms !important;
+    animation-iteration-count:1 !important;
+    transition-duration:.01ms !important;
+  }
+  .friends__track{ animation:none !important; }
+}
+
+/* SplitType chars are inline-block by default; make sure the reveal
+   transform has somewhere to animate from without layout jump */
+#heroTitle .char{ display:inline-block; will-change:transform, opacity; }
+#heroTitle .word{ display:inline-block; }
+
+/* Reveal + reveal-item start visible by default so content is never
+   hidden if JS fails to load; GSAP overrides the initial state at runtime */
+.reveal, .reveal-item{ opacity:1; }
+
+/* Nav / hero elements GSAP animates from these base states */
+.nav{ will-change:transform, opacity; }
+
+/* Video card fade-in poster while metadata loads */
+.video-card video{ background:var(--void-3); }
+
+/* Achievements / goals subtle glow pulse when active */
+@keyframes glowPulse{
+  0%,100%{ box-shadow:0 0 0 rgba(212,175,106,0); }
+  50%{ box-shadow:0 0 22px rgba(212,175,106,.25); }
+}
+.counter-card:hover{ animation:glowPulse 2.4s ease-in-out infinite; }
+
+/* Cursor click pulse */
+@keyframes cursorPulse{
+  0%{ transform:scale(1); opacity:1; }
+  100%{ transform:scale(2.2); opacity:0; }
+}
+
+/* Loading bar shimmer */
+@keyframes shimmer{
+  0%{ background-position:-200px 0; }
+  100%{ background-position:200px 0; }
+}
