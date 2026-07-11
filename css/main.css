@@ -267,7 +267,8 @@ body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
 /* ============ LIFESTYLE (floating objects) ============ */
 .lifestyle{ position:relative; background:var(--void-2); min-height:70vh; display:flex; flex-direction:column; justify-content:center; overflow:hidden; }
 .lifestyle__stage{ position:relative; height:340px; margin-top:2rem; }
-.float-item{ position:absolute; width:92px; height:92px; border-radius:20px; background:var(--surface); border:1px solid var(--border-strong); display:flex; align-items:center; justify-content:center; font-size:2rem; backdrop-filter:blur(6px); transition:transform .3s var(--ease-soft); animation:floatY 6s ease-in-out infinite; }
+.float-item{ position:absolute; width:92px; height:92px; border-radius:20px; display:flex; align-items:center; justify-content:center; font-size:2rem; backdrop-filter:blur(6px); transition:transform .3s var(--ease-soft); animation:floatY 6s ease-in-out infinite; }
+.float-item img {width: 92px;height: 92px;object-fit: contain;display: block;user-select: none;pointer-events: none;}
 .float-item:nth-child(1){ top:5%; left:8%; animation-delay:0s; }
 .float-item:nth-child(2){ top:40%; left:28%; animation-delay:.6s; }
 .float-item:nth-child(3){ top:10%; left:48%; animation-delay:1.2s; }
@@ -278,13 +279,15 @@ body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
 
 /* ============ TRAVEL ============ */
 .travel{ background:var(--void); }
-.travel__map{ position:relative; height:400px; border-radius:20px; border:1px solid var(--border); background:var(--void-3); overflow:hidden; }
+.travel__map{ position:relative; height:205px; border-radius:20px; border:1px solid var(--border); background:var(--void-3) url("../assets/uzb.png") center center / 100% no-repeat; overflow:hidden; }
 .travel__map canvas{ width:100%; height:100%; display:block; }
 .travel__stats{ display:flex; gap:2.5rem; margin-top:1.6rem; flex-wrap:wrap; }
 .travel__stats div{ font-family:var(--font-mono); }
 .travel__stats strong{ display:block; font-size:1.8rem; color:var(--gold); font-family:var(--font-display); }
 .travel__stats span{ color:var(--ink-faint); font-size:.78rem; }
-
+@media (min-width:901px){
+  .travel__map{height:400px;}
+}
 /* ============ FRIENDS ============ */
 .friends{ background:var(--void-2); overflow:hidden; }
 .friends__slider{ position:relative; overflow:hidden; }
@@ -338,9 +341,11 @@ body.has-custom-cursor a, body.has-custom-cursor button{ cursor:none; }
 .showcase__grid{ display:grid; grid-template-columns:repeat(4,1fr); gap:1rem; }
 .showcase-card{ background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:1.5rem; transition:transform .35s var(--ease), border-color .35s; }
 .showcase-card:hover{ transform:translateY(-6px); border-color:var(--gold); }
-.showcase-card__icon{ font-size:1.7rem; display:block; margin-bottom:1rem; }
-.showcase-card h4{ font-size:1.02rem; margin-bottom:.3rem; }
-.showcase-card p{ color:var(--ink-dim); font-size:.82rem; }
+.showcase-card__head{display:flex;align-items:center;gap:.8rem;margin-bottom:1rem}
+.showcase-card__icon{width:42px;height:42px;flex:0 0 42px}
+.showcase-card__icon img{width:100%;height:100%;object-fit:contain;display:block}
+.showcase-card h4{margin:0;font-size:1.02rem}
+.showcase-card p{margin:0;color:var(--ink-dim);font-size:.82rem}
 @media (max-width:900px){ .showcase__grid{ grid-template-columns:1fr 1fr; } }
 @media (max-width:560px){ .showcase__grid{ grid-template-columns:1fr; } }
 
