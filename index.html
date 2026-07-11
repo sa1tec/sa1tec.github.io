@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Марк Соколов — Cinematic Digital Experience</title>
+<meta name="description" content="Интерактивная история жизни: путь, проекты, моменты и способы связаться. Cinematic digital experience на Three.js, GSAP и WebGL.">
+<meta name="theme-color" content="#050506">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Fraunces:ital,opsz,wght@1,9..144,400..500&display=swap" rel="stylesheet">
+
+<link rel="stylesheet" href="css/main.css">
+<link rel="stylesheet" href="css/animations.css">
+
+<!-- Three.js as an ES module via import map -->
+<script type="importmap">
+{
+  "imports": {
+    "three": "https://unpkg.com/three@0.160.0/build/three.module.js"
+  }
+}
+</script>
+</head>
+<body class="is-loading">
+
+<!-- ============ PRELOADER ============ -->
+<div class="preloader" id="preloader" aria-hidden="true">
+  <div class="preloader__mark"><span>SAI</span><span>TEC</span></div>
+  <div class="preloader__bar"><span id="preloaderFill"></span></div>
+  <div class="preloader__pct" id="preloaderPct">0%</div>
+</div>
+
+<!-- ============ CURSOR ============ -->
+<div class="cursor" id="cursor" aria-hidden="true">
+  <div class="cursor__dot"></div>
+  <div class="cursor__ring"></div>
+</div>
+
+<div class="scroll-progress" id="scrollProgress" aria-hidden="true"><span></span></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="toasts" id="toasts" aria-live="polite"></div>
+
+<!-- Hidden SVG defs shared across the page (goal ring gradient) -->
+<svg width="0" height="0" style="position:absolute">
+  <defs>
+    <linearGradient id="goalGradient" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#4fd1c5"/>
+      <stop offset="100%" stop-color="#d4af6a"/>
+    </linearGradient>
+  </defs>
+</svg>
+
+<!-- ============ NAV ============ -->
+<nav class="nav" id="nav">
+  <a href="#top" class="nav__logo" data-cursor="link">
+    <span class="nav__logo-mark">S·T</span>
+    <span class="nav__logo-text">SAITEC</span>
+  </a>
+  <ul class="nav__links">
+    <li><a href="#about" data-nav="about">Обо мне</a></li>
+    <li><a href="#journey" data-nav="journey">Путь</a></li>
+    <li><a href="#projects" data-nav="projects">Проекты</a></li>
+    <li><a href="#gallery" data-nav="gallery">Галерея</a></li>
+    <li><a href="#friends" data-nav="friends">Друзья</a></li>
+    <li><a href="#blog" data-nav="blog">Блог</a></li>
+    <li><a href="#contact" data-nav="contact">Контакты</a></li>
+  </ul>
+  <div class="nav__actions">
+    <button class="sound-toggle" id="soundToggle" aria-pressed="false" aria-label="Включить звук" data-cursor="link">
+      <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 9v6h4l5 5V4L8 9H4Z"/><path class="wave" d="M17.5 8.5a5 5 0 0 1 0 7"/></svg>
+    </button>
+    <button class="burger" id="burger" aria-label="Меню" aria-expanded="false"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<div class="mobile-menu" id="mobileMenu">
+  <ul>
+    <li><a href="#about" data-nav="about">Обо мне</a></li>
+    <li><a href="#journey" data-nav="journey">Путь</a></li>
+    <li><a href="#projects" data-nav="projects">Проекты</a></li>
+    <li><a href="#gallery" data-nav="gallery">Галерея</a></li>
+    <li><a href="#lifestyle" data-nav="lifestyle">Стиль жизни</a></li>
+    <li><a href="#travel" data-nav="travel">Путешествия</a></li>
+    <li><a href="#friends" data-nav="friends">Друзья</a></li>
+    <li><a href="#moments" data-nav="moments">Моменты</a></li>
+    <li><a href="#videos" data-nav="videos">Видео</a></li>
+    <li><a href="#blog" data-nav="blog">Блог</a></li>
+    <li><a href="#contact" data-nav="contact">Контакты</a></li>
+  </ul>
+</div>
+
+<main id="top">
+
+<!-- ============ HERO ============ -->
+<section class="hero" id="hero">
+  <div class="hero__canvas-layer"><canvas id="heroCanvas"></canvas></div>
+  <video class="hero__video" autoplay muted loop playsinline>
+    <source src="assets/1.mp4" type="video/mp4">
+</video>
+  <div class="hero__overlay"></div>
+
+  <div class="hero__inner">
+    <p class="hero__eyebrow" id="heroEyebrow">Интерактивная история жизни</p>
+    <h1 class="hero__title" id="heroTitle">Саидаброр <span class="word">Толибов</span></h1>
+    <p class="hero__subtitle" id="heroSubtitle">Creative Frontend Developer · строю цифровые впечатления, которые запоминаются</p>
+    <div class="hero__cta">
+      <a href="#about" class="btn btn--primary magnetic" data-cursor="link"><span>Смотреть историю</span></a>
+      <a href="#contact" class="btn btn--ghost magnetic" data-cursor="link"><span>Написать мне</span></a>
+    </div>
+  </div>
+
+  <a href="#about" class="hero__scroll" data-cursor="link">
+    <span>Листайте вниз</span>
+    <div class="hero__scroll-line"><i></i></div>
+  </a>
+</section>
+
+<div class="divider" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
+
+<!-- ============ ABOUT ============ -->
+<section class="section about" id="about">
+  <div class="about__grid">
+    <div class="about__mask" id="aboutMask">
+      <img src="https://images.unsplash.com/photo-1633332755192-727a05c4013d?w=900&q=80" alt="Марк Соколов">
+    </div>
+    <div>
+      <span class="eyebrow">Обо мне</span>
+      <h2 class="section__title" style="margin-bottom:1.4rem;">Немного о том,<br>кто я такой</h2>
+      <div class="about__lead">
+        <p>Я создаю цифровые продукты, в которых форма служит содержанию, а детали решают всё. Восемь лет собираю интерфейсы и истории, которые должны вызывать эмоцию с первой секунды.</p>
+        <p>Мне важно, чтобы то, что я делаю, было честным: без лишнего шума, но с характером.</p>
+      </div>
+    </div>
+  </div>
+  <div class="about__facts">
+    <div class="fact-card"><span class="fact-card__num">01</span><h4>Разноязыкий</h4><p>Думаю на трёх языках и постоянно перевожу идеи из одной культуры кода в другую.</p></div>
+    <div class="fact-card"><span class="fact-card__num">02</span><h4>Полуночник</h4><p>Лучшие решения приходят после полуночи, под тихий плейлист.</p></div>
+    <div class="fact-card"><span class="fact-card__num">03</span><h4>Коллекционер деталей</h4><p>Отступ в 2px может испортить мне вечер — и я этим горжусь.</p></div>
+  </div>
+</section>
+
+<!-- ============ JOURNEY (pinned scroll-storytelling timeline) ============ -->
+<section class="section journey" id="journey">
+  <div class="journey__thread"><div class="journey__thread-fill" id="journeyThreadFill"></div></div>
+  <div class="section__head">
+    <span class="eyebrow">Мой путь</span>
+    <h2 class="section__title">История, которая<br>привела меня сюда</h2>
+  </div>
+  <div class="timeline" id="timelineList"><!-- rendered by render.js --></div>
+</section>
+
+<div class="divider divider--flip" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
+
+<!-- ============ PROJECTS ============ -->
+<section class="section projects" id="projects">
+  <div class="section__head">
+    <span class="eyebrow">Проекты</span>
+    <h2 class="section__title">Работы, которыми<br>я горжусь</h2>
+    <p>Каждая карточка открывается в полноэкранном окне с деталями, технологиями и ссылками.</p>
+  </div>
+  <div class="projects__grid" id="projectsGrid"><!-- rendered by render.js --></div>
+</section>
+
+<div class="overlay" id="projectOverlay" aria-hidden="true"></div>
+
+<!-- ============ GALLERY ============ -->
+<section class="section gallery" id="gallery">
+  <div class="section__head">
+    <span class="eyebrow">Галерея</span>
+    <h2 class="section__title">Кадры из моей<br>жизни</h2>
+  </div>
+  <div class="gallery__grid" id="galleryGrid"><!-- rendered by render.js --></div>
+</section>
+
+<div class="lightbox" id="lightbox" aria-hidden="true">
+  <button class="lightbox__close" id="lightboxClose" aria-label="Закрыть"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6L6 18"/></svg></button>
+  <button class="lightbox__nav lightbox__nav--prev" id="lightboxPrev" aria-label="Предыдущее"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+  <button class="lightbox__nav lightbox__nav--next" id="lightboxNext" aria-label="Следующее"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+  <img class="lightbox__img" id="lightboxImg" src="" alt="">
+</div>
+
+<!-- ============ LIFESTYLE ============ -->
+<section class="section lifestyle" id="lifestyle">
+  <div class="section__head">
+    <span class="eyebrow">Стиль жизни</span>
+    <h2 class="section__title">Вещи, которые<br>меня окружают</h2>
+  </div>
+  <div class="lifestyle__stage">
+    <div class="float-item" data-depth="1.4">⌨️</div>
+    <div class="float-item" data-depth="0.8">📷</div>
+    <div class="float-item" data-depth="1.1">🏎️</div>
+    <div class="float-item" data-depth="0.6">💿</div>
+    <div class="float-item" data-depth="1.3">📚</div>
+    <div class="float-item" data-depth="0.9">🎧</div>
+  </div>
+</section>
+
+<!-- ============ TRAVEL ============ -->
+<section class="section travel" id="travel">
+  <div class="section__head">
+    <span class="eyebrow">Путешествия</span>
+    <h2 class="section__title">Точки на карте,<br>которые изменили меня</h2>
+  </div>
+  <div class="travel__map"><canvas id="travelCanvas"></canvas></div>
+  <div class="travel__stats">
+    <div><strong>24</strong><span>СТРАНЫ</span></div>
+    <div><strong>63</strong><span>ГОРОДА</span></div>
+    <div><strong>140K+</strong><span>КМ В ПУТИ</span></div>
+  </div>
+</section>
+
+<div class="divider" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
+
+<!-- ============ FRIENDS ============ -->
+<section class="section friends" id="friends">
+  <div class="section__head">
+    <span class="eyebrow">Мои друзья</span>
+    <h2 class="section__title">Люди, которые<br>рядом</h2>
+  </div>
+  <div class="friends__slider"><div class="friends__track" id="friendsTrack"><!-- rendered by render.js --></div></div>
+</section>
+
+<!-- ============ MOMENTS ============ -->
+<section class="section moments" id="moments">
+  <div class="section__head">
+    <span class="eyebrow">Интересные моменты</span>
+    <h2 class="section__title">Лучшее из того,<br>что случилось</h2>
+  </div>
+  <div class="moments__slider">
+    <div class="moments__track" id="momentsTrack"><!-- rendered by render.js --></div>
+  </div>
+  <div class="moments__controls">
+    <button id="momentsPrev" aria-label="Назад"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M15 6l-6 6 6 6"/></svg></button>
+    <div class="moments__dots" id="momentsDots"></div>
+    <button id="momentsNext" aria-label="Вперёд"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M9 6l6 6-6 6"/></svg></button>
+  </div>
+</section>
+
+<div class="divider divider--flip" aria-hidden="true"><svg viewBox="0 0 1440 60" preserveAspectRatio="none"><path d="M0,30 C360,60 1080,0 1440,30 L1440,60 L0,60 Z"/></svg></div>
+
+<!-- ============ VIDEOS ============ -->
+<section class="section videos" id="videos">
+  <div class="section__head">
+    <span class="eyebrow">Видео</span>
+    <h2 class="section__title">Пара минут<br>обо мне живьём</h2>
+  </div>
+  <div class="videos__grid" id="videosGrid"><!-- rendered by render.js --></div>
+</section>
+
+<!-- ============ SHOWCASE: books / music / gaming / tech ============ -->
+<section class="section showcase" id="showcase">
+  <div class="section__head">
+    <span class="eyebrow">Любимое</span>
+    <h2 class="section__title">Книги, музыка,<br>игры и технологии</h2>
+  </div>
+  <div class="showcase__tabs" id="showcaseTabs">
+    <button class="showcase__tab is-active" data-filter="all">Всё</button>
+    <button class="showcase__tab" data-filter="books">Книги</button>
+    <button class="showcase__tab" data-filter="music">Музыка</button>
+    <button class="showcase__tab" data-filter="gaming">Игры</button>
+    <button class="showcase__tab" data-filter="tech">Технологии</button>
+  </div>
+  <div class="showcase__grid" id="showcaseGrid">
+    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Дюна»</h4><p>Перечитываю раз в пару лет</p></div>
+    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Snow Crash»</h4><p>Предсказал половину интернета</p></div>
+    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Дизайн привычных вещей»</h4><p>Настольная книга по UX</p></div>
+    <div class="showcase-card" data-cat="books"><span class="showcase-card__icon">📖</span><h4>«Атомные привычки»</h4><p>Про маленькие шаги</p></div>
+    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Синти-вейв</h4><p>Работаю только под него</p></div>
+    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Tycho</h4><p>Идеально для фокуса</p></div>
+    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Boards of Canada</h4><p>Ностальгия в чистом виде</p></div>
+    <div class="showcase-card" data-cat="music"><span class="showcase-card__icon">🎵</span><h4>Виниловые пятницы</h4><p>Ритуал в конце недели</p></div>
+    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Disco Elysium</h4><p>Игра, которая говорит как книга</p></div>
+    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Hades</h4><p>Идеальный игровой луп</p></div>
+    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Portal 2</h4><p>Дизайн уровней как образец</p></div>
+    <div class="showcase-card" data-cat="gaming"><span class="showcase-card__icon">🎮</span><h4>Outer Wilds</h4><p>Самое честное чувство открытия</p></div>
+    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Three.js</h4><p>Инструмент, который изменил мой веб</p></div>
+    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>WebGL Shaders</h4><p>Учусь писать GLSL по вечерам</p></div>
+    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Figma</h4><p>Второй дом для дизайна</p></div>
+    <div class="showcase-card" data-cat="tech"><span class="showcase-card__icon">⚙️</span><h4>Механическая клавиатура</h4><p>Звук, под который я думаю</p></div>
+  </div>
+</section>
+
+<!-- ============ ACHIEVEMENTS ============ -->
+<section class="section achievements" id="achievements">
+  <div class="achievements__grid">
+    <div class="counter-card"><span class="counter" data-target="8" data-suffix="+">0</span><p>лет опыта</p></div>
+    <div class="counter-card"><span class="counter" data-target="24" data-suffix="">0</span><p>страны в поездках</p></div>
+    <div class="counter-card"><span class="counter" data-target="52" data-suffix="">0</span><p>завершённых проекта</p></div>
+    <div class="counter-card"><span class="counter" data-target="37" data-suffix="+">0</span><p>технологии изучено</p></div>
+    <div class="counter-card"><span class="counter" data-target="130" data-suffix="+">0</span><p>новых знакомств</p></div>
+  </div>
+</section>
+
+<!-- ============ GOALS ============ -->
+<section class="section goals" id="goals">
+  <div class="section__head">
+    <span class="eyebrow">Цели</span>
+    <h2 class="section__title">Куда я двигаюсь<br>дальше</h2>
+  </div>
+  <div class="goals__grid">
+    <div class="goal">
+      <svg class="goal-ring" data-progress="80" viewBox="0 0 120 120"><circle class="goal-ring__bg" cx="60" cy="60" r="52"/><circle class="goal-ring__fg" cx="60" cy="60" r="52"/></svg>
+      <div class="goal-label">Запустить студию</div><span class="goal-pct">80%</span>
+    </div>
+    <div class="goal">
+      <svg class="goal-ring" data-progress="45" viewBox="0 0 120 120"><circle class="goal-ring__bg" cx="60" cy="60" r="52"/><circle class="goal-ring__fg" cx="60" cy="60" r="52"/></svg>
+      <div class="goal-label">Выучить японский</div><span class="goal-pct">45%</span>
+    </div>
+    <div class="goal">
+      <svg class="goal-ring" data-progress="65" viewBox="0 0 120 120"><circle class="goal-ring__bg" cx="60" cy="60" r="52"/><circle class="goal-ring__fg" cx="60" cy="60" r="52"/></svg>
+      <div class="goal-label">Пробежать ультрамарафон</div><span class="goal-pct">65%</span>
+    </div>
+    <div class="goal">
+      <svg class="goal-ring" data-progress="30" viewBox="0 0 120 120"><circle class="goal-ring__bg" cx="60" cy="60" r="52"/><circle class="goal-ring__fg" cx="60" cy="60" r="52"/></svg>
+      <div class="goal-label">Издать книгу о дизайне</div><span class="goal-pct">30%</span>
+    </div>
+  </div>
+</section>
+
+<!-- ============ QUOTES ============ -->
+<section class="section quotes" id="quotes">
+  <div class="quotes__canvas"><canvas id="auroraCanvas"></canvas></div>
+  <div>
+    <div class="quotes__slider"><div class="quotes__track" id="quotesTrack"><!-- rendered by render.js --></div></div>
+    <div class="quotes__dots" id="quotesDots"></div>
+  </div>
+</section>
+
+<!-- ============ BLOG ============ -->
+<section class="section blog" id="blog">
+  <div class="section__head">
+    <span class="eyebrow">Блог</span>
+    <h2 class="section__title">Мысли, которые<br>стоило записать</h2>
+  </div>
+  <div class="blog__grid" id="blogGrid"><!-- rendered by render.js --></div>
+</section>
+
+<div class="overlay" id="blogOverlay" aria-hidden="true"></div>
+
+<!-- ============ CONTACT ============ -->
+<section class="section contact" id="contact">
+  <div class="contact__inner">
+    <div>
+      <span class="eyebrow">Контакты</span>
+      <h2 class="section__title">Похоже, нам<br>стоит познакомиться</h2>
+      <p class="contact__text">Расскажите о своей идее, проекте или просто поздоровайтесь — отвечаю быстро и всегда рад новому разговору.</p>
+      <div class="contact__socials">
+        <a href="https://t.me/" target="_blank" rel="noopener" class="social-btn magnetic" data-cursor="link"><span>Telegram</span></a>
+        <a href="https://instagram.com/" target="_blank" rel="noopener" class="social-btn magnetic" data-cursor="link"><span>Instagram</span></a>
+        <a href="https://github.com/" target="_blank" rel="noopener" class="social-btn magnetic" data-cursor="link"><span>GitHub</span></a>
+        <a href="mailto:hello@marksokolov.dev" class="social-btn magnetic" data-cursor="link"><span>Email</span></a>
+      </div>
+    </div>
+    <form class="contact__form" id="contactForm" novalidate>
+      <canvas id="contactCanvas"></canvas>
+      <div class="field">
+        <input type="text" id="fName" name="name" required placeholder=" ">
+        <label for="fName">Ваше имя</label>
+        <span class="field__error">Введите имя</span>
+      </div>
+      <div class="field">
+        <input type="email" id="fEmail" name="email" required placeholder=" ">
+        <label for="fEmail">Ваш email</label>
+        <span class="field__error">Введите корректный email</span>
+      </div>
+      <div class="field">
+        <textarea id="fMessage" name="message" rows="4" required placeholder=" "></textarea>
+        <label for="fMessage">Сообщение</label>
+        <span class="field__error">Напишите сообщение</span>
+      </div>
+      <button type="submit" class="btn btn--primary btn--full magnetic"><span>Отправить сообщение</span></button>
+    </form>
+  </div>
+</section>
+
+</main>
+
+<footer class="footer">
+  <div class="footer__top">
+    <a href="#top" class="footer__logo">Марк Соколов</a>
+    <button class="to-top" id="toTop" aria-label="Наверх"><svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 19V5M5 12l7-7 7 7"/></svg></button>
+  </div>
+  <div class="footer__bottom">
+    <p>© <span id="year"></span> Марк Соколов. Cinematic Digital Experience.</p>
+    <p class="footer__made">Three.js · GSAP · Lenis · vanilla JS</p>
+  </div>
+</footer>
+
+<!-- Vendor libraries (UMD, expose window globals consumed by js/main.js) -->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+<script src="https://unpkg.com/split-type@0.3.4/umd/index.min.js"></script>
+
+<script type="module" src="js/main.js"></script>
+</body>
+</html>
